@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#5C2E00" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="ROAST" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="foamlogo.png" />
+  <title>ROAST</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <img src="foamlogo.png" alt="ROAST" />
+</div>
+
+<!-- AUTH -->
+<div id="auth-screen" style="display:none;">
+  <div class="logo-wrap">
+    <img src="foamlogo.png" alt="ROAST" />
+  </div>
+  <h2>ROAST</h2>
+  <p>Chattanooga's coffee community.<br/>Review, discover, and connect.</p>
+  <div class="auth-tabs">
+    <button class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+    <button class="auth-tab" onclick="switchTab('signup')">Create Account</button>
+  </div>
+  <form class="auth-form" id="login-form" onsubmit="handleLogin(event)">
+    <input type="email" id="login-email" placeholder="Email" required />
+    <input type="password" id="login-password" placeholder="Password" required />
+    <button type="submit" class="btn-primary">SIGN IN</button>
+    <p id="login-error" style="color:#3D0014;font-size:13px;text-align:center;min-height:18px;"></p>
+  </form>
+  <form class="auth-form" id="signup-form" style="display:none;" onsubmit="handleSignup(event)">
+    <input type="text" id="signup-name" placeholder="Full Name" required />
+    <input type="text" id="signup-username" placeholder="Username" required />
+    <input type="email" id="signup-email" placeholder="Email" required />
+    <input type="password" id="signup-password" placeholder="Password (min 6 chars)" required />
+    <button type="submit" class="btn-primary">CREATE ACCOUNT</button>
+    <p id="signup-error" style="color:#3D0014;font-size:13px;text-align:center;min-height:18px;"></p>
+  </form>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" style="display:none;">
+  <div id="topbar">
+    <button class="back-btn" id="back-btn" onclick="goBack()">←</button>
+    <h1 id="topbar-title">ROAST</h1>
+  </div>
+  <div id="pages">
+    <div class="page active" id="page-feed"></div>
+    <div class="page" id="page-map"></div>
+    <div class="page" id="page-add"></div>
+    <div class="page" id="page-profile"></div>
+    <div class="page" id="page-post"></div>
+    <div class="page" id="page-user"></div>
+    <div class="page" id="page-shop"></div>
+  </div>
+  <nav id="bottomnav">
+    <button class="nav-btn active" id="nav-feed" onclick="showPage('feed')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg>
+      <span>Circles</span>
+    </button>
+    <button class="nav-btn" id="nav-map" onclick="showPage('map')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Map</span>
+    </button>
+    <button class="nav-btn" id="nav-add" onclick="showPage('add')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      <span>Review</span>
+    </button>
+    <button class="nav-btn" id="nav-profile" onclick="showPage('profile')">
+      <div id="nav-avatar" style="width:26px;height:26px;border-radius:50%;background:var(--tan);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--gold);overflow:hidden;border:1.5px solid currentColor;"></div>
+      <span>Profile</span>
+    </button>
+  </nav>
+</div>
+
+<!-- RATING BREAKDOWN MODAL -->
+<div class="modal-overlay" id="rating-modal" style="display:none;" onclick="closeRatingModal(event)">
+  <div class="modal-sheet">
+    <h3>Rating Breakdown</h3>
+    <div id="rating-breakdown"></div>
+    <button class="modal-close" onclick="document.getElementById('rating-modal').style.display='none'">Close</button>
+  </div>
+</div>
+
+<!-- FOLLOWERS/FOLLOWING MODAL -->
+<div class="modal-overlay" id="follow-modal" style="display:none;" onclick="closeFollowModal(event)">
+  <div class="modal-sheet">
+    <h3 id="follow-modal-title">Followers</h3>
+    <div id="follow-modal-list" style="max-height:320px;overflow-y:auto;"></div>
+    <button class="modal-close" onclick="document.getElementById('follow-modal').style.display='none'">Close</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+</body>
+</html>
